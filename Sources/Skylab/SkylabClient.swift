@@ -91,7 +91,7 @@ public class DefaultSkylabClient : SkylabClient {
             let userId = userContext["user_id"]
             let deviceId = userContext["device_id"]
             if userId == nil && deviceId == nil {
-                print("[Skylab] WARN: user id and device id are nil; no variants fetched")
+                print("[Skylab] WARN: user id and device id are null; amplitude will not be able to resolve identity")
             }
             
             do {
