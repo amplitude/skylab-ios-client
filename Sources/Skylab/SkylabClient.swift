@@ -89,8 +89,9 @@ public class DefaultSkylabClient : SkylabClient {
             let userContext = self.addContext(user:self.user)
             
             let userId = userContext["user_id"]
-            if userId == nil {
-                print("[Skylab] WARN: userId is nil; no variants fetched")
+            let deviceId = userContext["device_id"]
+            if userId == nil && deviceId == nil {
+                print("[Skylab] WARN: user id and device id are nil; no variants fetched")
                 return
             }
             
