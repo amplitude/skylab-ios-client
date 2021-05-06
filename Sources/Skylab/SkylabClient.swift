@@ -50,7 +50,6 @@ public class DefaultSkylabClient : SkylabClient {
         self.contextProvider = nil
     }
 
-
     public func start(user: SkylabUser, completion: (() -> Void)? = nil) -> Void {
         self.user = user
         self.loadFromStorage()
@@ -71,7 +70,24 @@ public class DefaultSkylabClient : SkylabClient {
     }
 
     public func getUserWithContext() -> SkylabUser {
-        return SkylabUser(user: self.user, contextProvider: self.contextProvider)
+        let builder = SkylabUser.Builder()
+        if self.contextProvider != nil {
+            if let deviceId = self.contextProvider?.getDeviceId(), deviceId != "" {
+                _ = builder.setDeviceId(deviceId)
+            }
+            if let userId = self.contextProvider?.getUserId(), userId != "" {
+                _ = builder.setUserId(userId)
+            }
+            _ = builder.setPlatform(self.contextProvider?.getPlatform())
+                .setVersion(self.contextProvider?.getVersion())
+                .setLanguage(self.contextProvider?.getLanguage())
+                .setOs(self.contextProvider?.getOs())
+                .setDeviceManufacturer(self.contextProvider?.getDeviceManufacturer())
+                .setDeviceModel(self.contextProvider?.getDeviceModel())
+        }
+        return builder.setLibrary("\(SkylabConfig.Constants.Library)/\(SkylabConfig.Constants.Version)")
+            .copyUser(self.user ?? SkylabUser())
+            .build()
     }
 
     public func refetchAll(completion: (() -> Void)? = nil) -> Void {

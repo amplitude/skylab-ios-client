@@ -71,48 +71,49 @@ class SkylabUserTests: XCTestCase {
         XCTAssert(user == user3)
     }
 
-    func testSkylabUserContextProviderMerge() {
-        let user = SkylabUser(
-            deviceId: "",
-            userId: nil,
-            version: "version"
-        )
-        let mergedUser = SkylabUser(user: user, contextProvider: TestContextProvider())
-        let expectedUserAfterMerge = SkylabUser(
-            deviceId: "device_id",
-            userId: "user_id",
-            version: "version",
-            language: "language"
-        )
-        print(mergedUser)
-        print(expectedUserAfterMerge)
-        XCTAssert(mergedUser == expectedUserAfterMerge)
-    }
-}
-
-class TestContextProvider : ContextProvider {
-    func getDeviceId() -> String? {
-        return "device_id"
-    }
-    func getUserId() -> String? {
-        return "user_id"
-    }
-    func getVersion() -> String? {
-        return nil
-    }
-    func getLanguage() -> String? {
-        return "language"
-    }
-    func getPlatform() -> String? {
-        return nil
-    }
-    func getOs() -> String? {
-        return nil
-    }
-    func getDeviceManufacturer() -> String? {
-        return nil
-    }
-    func getDeviceModel() -> String? {
-        return nil
+    func testSkylabUserBuilderCopyUser() {
+        let builder = SkylabUser.Builder()
+            .setUserId("user_id")
+            .setDeviceId("device_id")
+            .setCountry("country")
+            .setCity("test")
+            .setRegion("test")
+            .setDma("test")
+            .setLanguage("test")
+            .setPlatform("test")
+            .setOs("test")
+            .setLibrary("test")
+            .setDeviceFamily("test")
+            .setDeviceType("test")
+            .setDeviceManufacturer("test")
+            .setDeviceModel("test")
+            .setCarrier("test")
+            .setUserProperty("userPropertyKey", value: "value")
+        let user2 = SkylabUser.Builder()
+            .setCountry("newCountry")
+            .setVersion("newVersion")
+            .setUserProperty("userPropertyKey2", value: "value2")
+            .build()
+        let user = builder.copyUser(user2).build()
+        let expected = SkylabUser.Builder()
+            .setUserId("user_id")
+            .setDeviceId("device_id")
+            .setCountry("newCountry") // overwrites value
+            .setVersion("newVersion") // overwrites null
+            .setCity("test")
+            .setRegion("test")
+            .setDma("test")
+            .setLanguage("test")
+            .setPlatform("test")
+            .setOs("test")
+            .setLibrary("test")
+            .setDeviceFamily("test")
+            .setDeviceType("test")
+            .setDeviceManufacturer("test")
+            .setDeviceModel("test")
+            .setCarrier("test")
+            .setUserProperty("userPropertyKey2", value: "value2")
+            .build()
+        XCTAssert(expected == user)
     }
 }
