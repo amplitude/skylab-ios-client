@@ -10,7 +10,7 @@ import XCTest
 
 class SkylabUserTests: XCTestCase {
 
-    func testMergeContext() {
+    func testSkylabUserJSONSerialization() {
         let user = SkylabUser(
             deviceId: "device_id",
             userId: "user_id",
@@ -43,6 +43,32 @@ class SkylabUserTests: XCTestCase {
         XCTAssert(userDict["device_id"] as! String == expectedDict["device_id"] as! String)
         XCTAssert(userDict["country"] as! String == expectedDict["country"] as! String)
         XCTAssert(userUserDict == expectedUserDict)
+    }
+
+    func testSkylabUserEquality() {
+        let user = SkylabUser(
+            deviceId: "device_id",
+            userId: "user_id",
+            version: nil,
+            country: "country",
+            userProperties: ["userPropertyKey": "value"]
+        )
+        let user2 = SkylabUser(
+            deviceId: "device_id",
+            userId: "user_id",
+            version: nil,
+            country: "country",
+            userProperties: ["userPropertyKey": "different value"]
+        )
+        let user3 = SkylabUser(
+            deviceId: "device_id",
+            userId: "user_id",
+            version: nil,
+            country: "country",
+            userProperties: ["userPropertyKey": "value"]
+        )
+        XCTAssert(user != user2)
+        XCTAssert(user == user3)
     }
 
     func testSkylabUserContextProviderMerge() {
