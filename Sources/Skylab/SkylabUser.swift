@@ -8,23 +8,23 @@
 import Foundation
 
 public struct SkylabUser: Equatable {
-    public internal(set) var deviceId: String?
-    public internal(set) var userId: String?
-    public internal(set) var version: String?
-    public internal(set) var country: String?
-    public internal(set) var region: String?
-    public internal(set) var dma: String?
-    public internal(set) var city: String?
-    public internal(set) var language: String?
-    public internal(set) var platform: String?
-    public internal(set) var os: String?
-    public internal(set) var deviceFamily: String?
-    public internal(set) var deviceType: String?
-    public internal(set) var deviceManufacturer: String?
-    public internal(set) var deviceModel: String?
-    public internal(set) var carrier: String?
-    public internal(set) var library: String?
-    public internal(set) var userProperties: [String: String]?
+    public private(set) var deviceId: String?
+    public private(set) var userId: String?
+    public private(set) var version: String?
+    public private(set) var country: String?
+    public private(set) var region: String?
+    public private(set) var dma: String?
+    public private(set) var city: String?
+    public private(set) var language: String?
+    public private(set) var platform: String?
+    public private(set) var os: String?
+    public private(set) var deviceFamily: String?
+    public private(set) var deviceType: String?
+    public private(set) var deviceManufacturer: String?
+    public private(set) var deviceModel: String?
+    public private(set) var carrier: String?
+    public private(set) var library: String?
+    public private(set) var userProperties: [String: String]?
 
     public init(
         deviceId: String? = nil,
