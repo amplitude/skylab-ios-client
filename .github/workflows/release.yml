@@ -89,7 +89,7 @@ jobs:
           rm -rf swift-doc
 
       - name: Generate Swift Doc
-        run: swift doc generate Sources/Skylab/ --module-name Skylab --output docs --format html --base-url /skylab-ios-client
+        run: swift doc generate Sources/Skylab/ --module-name Skylab --output docs --format html --base-url /${{ github.event.repository.name }}
 
       - name: Semantic Release --dry-run
         if: ${{ github.event.inputs.dryRun == 'true'}}
