@@ -7,24 +7,24 @@
 
 import Foundation
 
-public struct SkylabUser {
-    public let deviceId: String?
-    public let userId: String?
-    public let version: String?
-    public let country: String?
-    public let region: String?
-    public let dma: String?
-    public let city: String?
-    public let language: String?
-    public let platform: String?
-    public let os: String?
-    public let deviceFamily: String?
-    public let deviceType: String?
-    public let deviceManufacturer: String?
-    public let deviceModel: String?
-    public let carrier: String?
-    public let library: String?
-    public let userProperties: [String: String]?
+public struct SkylabUser: Equatable {
+    public internal(set) var deviceId: String?
+    public internal(set) var userId: String?
+    public internal(set) var version: String?
+    public internal(set) var country: String?
+    public internal(set) var region: String?
+    public internal(set) var dma: String?
+    public internal(set) var city: String?
+    public internal(set) var language: String?
+    public internal(set) var platform: String?
+    public internal(set) var os: String?
+    public internal(set) var deviceFamily: String?
+    public internal(set) var deviceType: String?
+    public internal(set) var deviceManufacturer: String?
+    public internal(set) var deviceModel: String?
+    public internal(set) var carrier: String?
+    public internal(set) var library: String?
+    public internal(set) var userProperties: [String: String]?
 
     public init(
         deviceId: String? = nil,
@@ -62,6 +62,37 @@ public struct SkylabUser {
         self.carrier = carrier
         self.library = library
         self.userProperties = userProperties
+    }
+
+    init(user: SkylabUser?, contextProvider: ContextProvider?) {
+        self = user ?? SkylabUser()
+        if contextProvider != nil {
+            if let deviceId = contextProvider?.getDeviceId(), deviceId != "" {
+                self.deviceId = deviceId
+            }
+            if let userId = contextProvider?.getUserId(), userId != "" {
+                self.userId = userId
+            }
+            if let platform = contextProvider?.getPlatform() {
+                self.platform = platform
+            }
+            if let version = contextProvider?.getVersion() {
+                self.version = version
+            }
+            if let language = contextProvider?.getLanguage() {
+                self.language = language
+            }
+            if let os = contextProvider?.getOs() {
+                self.os = os
+            }
+            if let deviceManufacturer = contextProvider?.getDeviceManufacturer() {
+                self.deviceManufacturer = deviceManufacturer
+            }
+            if let deviceModel = contextProvider?.getDeviceModel() {
+                self.deviceModel = deviceModel
+            }
+        }
+        // TODO: - Android does this: "skylab-android/" + BuildConfig.VERSION_NAME
     }
 
     public func toDictionary() -> [String:Any] {
