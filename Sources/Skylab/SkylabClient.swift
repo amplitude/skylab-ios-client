@@ -36,7 +36,7 @@ public class DefaultSkylabClient : SkylabClient {
     internal let config: SkylabConfig
     internal var userId: String?
     internal var user: SkylabUser?
-    internal var contextProvider: ContextProvider?
+    internal var contextProvider: ContextProvider? = DefaultContextProvider()
 
     init(apiKey: String, config: SkylabConfig) {
         self.apiKey = apiKey
