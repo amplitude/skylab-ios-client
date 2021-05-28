@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class DefaultContextProvider : ContextProvider {
+open class DefaultContextProvider : ContextProvider {
 
     var version: String?
 
@@ -229,18 +229,5 @@ public class DefaultContextProvider : ContextProvider {
 
     public func getDeviceModel() -> String? {
         return getModelString()
-    }
-
-    func waitForAmplitudeInitialized() -> Void {
-        if (initialized) {
-            return
-        }
-        let start = CFAbsoluteTimeGetCurrent()
-        while (self.amplitude.getDeviceId() as String? == nil) {
-            Thread.sleep(forTimeInterval: 0.02)
-        }
-        initialized = true
-        let end = CFAbsoluteTimeGetCurrent()
-        print("[Skylab] Waited \(end - start)s for Amplitude SDK initialization")
     }
 }
